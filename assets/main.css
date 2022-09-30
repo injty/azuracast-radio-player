@@ -1,0 +1,133 @@
+/* main styles */
+/* ----------- */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.full-screen {
+	background-color: blanchedalmond;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+	padding-top: 140px;
+}
+
+.pl-wrapper {
+	width: 100%;
+	max-width: 320px;
+	height: 100%;
+	max-height: 300px;
+	margin: 0 auto;
+	padding: 15px;
+	/* border: 1px solid blanchedalmond; */
+	border-radius: 1rem;
+	background-color: bisque;
+	box-shadow: 0 2px 8px 0 #34343434;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* player */
+/* ------ */
+.pl-decore {
+	width: 100%;
+	max-width: 120px;
+	height: 2px;
+	margin: 12px auto;
+	padding: 0;
+	background-color: blanchedalmond;
+}
+
+.pl-start {
+	position: relative;
+}
+
+.pl-image {
+	display: flex;
+	max-width: 180px;
+	overflow: hidden;
+	border: none;
+	border-radius: 50%;
+	margin: 0 auto;
+	box-shadow: 0 2px 8px 0 #34343434;
+	animation: plImageRotation 10s linear infinite;
+}
+
+@keyframes plImageRotation {
+	0% {
+		transform: rotate(0deg) scale(0.8);
+	}
+
+	25% {
+		transform: rotate(90deg) scale(1);
+	}
+
+	50% {
+		transform: rotate(180deg) scale(0.8);
+	}
+
+	75% {
+		transform: rotate(240deg) scale(1);
+	}
+
+	100% {
+		transform: rotate(360deg) scale(0.8);
+	}
+}
+
+.pl-image__source {
+	width: 100%;
+	object-fit: cover;
+}
+
+.pl-btn__play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60px;
+	text-shadow: 0 2px 8px 0 #34343434;
+	cursor: pointer;
+}
+
+.pl-info {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	font-size: 12px;
+	font-family: Tahoma, sans-serif, monospace;
+	font-weight: 900;
+	line-height: 22px;
+}
+
+.pl-text {
+	width: 100%;
+	max-width: 220px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pl-line {
+	max-width: 70%;
+	width: 320px;
+	height: 8px;
+	margin: 15px auto;
+	border: none;
+	border-radius: 8px;
+	background-color: blanchedalmond;
+}
+
+.pl-line__track {
+	width: 45%;
+	height: 100%;
+	background-color: darkcyan;
+	border: none;
+	border-radius: 8px;
+}
