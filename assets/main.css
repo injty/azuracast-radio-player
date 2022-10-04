@@ -90,8 +90,8 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	display: flex;
 	width: 60px;
-	text-shadow: 0 2px 8px 0 #34343434;
 	cursor: pointer;
 }
 
