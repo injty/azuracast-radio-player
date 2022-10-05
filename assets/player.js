@@ -5,7 +5,9 @@ function player() {
 	// --------
 	const request = (url) => fetch(url).then((res) => res.json());
 	const station = "https://media.money4you.financial:8032/api/station/1";
-	const nowplaying = "https://media.money4you.financial:8032/api/nowplaying";
+	const status = "https://media.money4you.financial:8032/api/status";
+	const time = "https://media.money4you.financial:8032/api/time";
+	const nowplaying = "https://media.money4you.financial:8032/api/nowplaying/1";
 	const src = "https://media.money4you.financial:8033/radio.mp3";
 
 	// varables
@@ -47,44 +49,63 @@ function player() {
 		main: this.main,
 		src: this.src,
 		remaining: this.remaining,
+		elapsed: this.elapsed,
+		timestamp: this.timestamp,
 		art: this.art,
 		title: this.title,
 
-		_update: async function () {
-			await request(nowplaying).then((res) => {
-				this.src = src;
-				this.main = res[0].now_playing;
-				this.remaining = Number(res[0].now_playing.remaining * 1000);
-				this.art = res[0].now_playing.song.art;
-				this.title = res[0].now_playing.song.text;
-			});
-			await this._render();
+		status: this.status,
+		time: this.time,
+
+		init: async function () {
+			await this._update()
+				.then(() => {
+					playerAudio.innerHTML = playerAudioTemp.replace("%src%", src);
+				})
+				.then(() => this._play())
+				.then(() => console.log("init: play and update first time"));
 		},
 
-		_play: async function () {
-			await this._debounce();
-			playerBtnPlay.addEventListener("click", () => {
-				playerAudio.paused ? playerAudio.play() : playerAudio.pause();
-			});
+		_update: async function () {
+			await request(nowplaying)
+				.then((res) => {
+					this.art = res.now_playing.song.art;
+					this.title = res.now_playing.song.text;
+				})
+				.then(() => this._render());
 		},
 
 		_render: function () {
 			playerImage.innerHTML = playerImageTemp.replace("%src%", this.art);
 			playerTitle.innerHTML = playerTextTemp.replace("%text%", this.title);
-			playerAudio.innerHTML = playerAudioTemp.replace("%src%", this.src);
+		},
+
+		_play: async function () {
+			playerBtnPlay.addEventListener("click", () => {
+				this._debounce();
+				playerAudio.play();
+			});
+		},
+
+		_remaining: async function () {
+			await request(nowplaying).then((res) => {
+				this.remaining = Number(res.now_playing.remaining * 1000);
+			});
+		},
+
+		_elapsed: async function () {
+			await request(nowplaying).then((res) => {
+				this.elapsed = Number(res.now_playing.elapsed);
+			});
+
+			await request(status).then((res) => (this.timestamp = res.timestamp));
+			await request(time).then((res) => (this.time = res.timestamp));
 		},
 
 		_debounce: function () {
 			debounce(async () => {
-				await this._update();
-				console.log(this.remaining);
-				// }, this.remaining)();
-			}, 1000)();
-		},
-
-		init: async function () {
-			await this._update();
-			this._play();
+				await this._update().then(() => console.log("_debounce: re-update"));
+			}, 5000)();
 		},
 	};
 
