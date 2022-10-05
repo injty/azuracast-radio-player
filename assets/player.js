@@ -1,11 +1,10 @@
-document.addEventListener("DOMContentLoaded", player);
+document.addEventListener("DOMContentLoaded", radio);
 
-function player() {
+function radio() {
 	// requests
 	// --------
 	const request = (url) => fetch(url).then((res) => res.json());
 	const station = "https://media.money4you.financial:8032/api/station/1";
-	const status = "https://media.money4you.financial:8032/api/status";
 	const time = "https://media.money4you.financial:8032/api/time";
 	const nowplaying = "https://media.money4you.financial:8032/api/nowplaying/1";
 	const src = "https://media.money4you.financial:8033/radio.mp3";
@@ -48,17 +47,13 @@ function player() {
 	const Player = {
 		main: this.main,
 		src: this.src,
-		remaining: this.remaining,
-		elapsed: this.elapsed,
-		timestamp: this.timestamp,
 		art: this.art,
 		title: this.title,
 
-		status: this.status,
-		time: this.time,
+		soundTime: this.soundTime,
 
-		init: async function () {
-			await this._update()
+		init: function () {
+			this._update()
 				.then(() => {
 					playerAudio.innerHTML = playerAudioTemp.replace("%src%", src);
 				})
@@ -71,6 +66,7 @@ function player() {
 				.then((res) => {
 					this.art = res.now_playing.song.art;
 					this.title = res.now_playing.song.text;
+					this.soundTime = res.now_playing.duration + res.now_playing.played_at;
 				})
 				.then(() => this._render());
 		},
@@ -80,32 +76,22 @@ function player() {
 			playerTitle.innerHTML = playerTextTemp.replace("%text%", this.title);
 		},
 
-		_play: async function () {
+		_play: function () {
 			playerBtnPlay.addEventListener("click", () => {
-				this._debounce();
 				playerAudio.play();
 			});
-		},
-
-		_remaining: async function () {
-			await request(nowplaying).then((res) => {
-				this.remaining = Number(res.now_playing.remaining * 1000);
-			});
-		},
-
-		_elapsed: async function () {
-			await request(nowplaying).then((res) => {
-				this.elapsed = Number(res.now_playing.elapsed);
-			});
-
-			await request(status).then((res) => (this.timestamp = res.timestamp));
-			await request(time).then((res) => (this.time = res.timestamp));
+			this._debounce();
+			console.log("update debounce from play function");
 		},
 
 		_debounce: function () {
 			debounce(async () => {
-				await this._update().then(() => console.log("_debounce: re-update"));
-			}, 5000)();
+				if (Math.floor(Date.now() / 1000) >= this.soundTime) {
+					await this._update();
+					console.log("upgrade update from debounce function");
+				}
+				console.log(this.soundTime - Math.floor(Date.now() / 1000));
+			}, 3000)();
 		},
 	};
 
