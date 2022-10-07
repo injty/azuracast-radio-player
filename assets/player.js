@@ -6,12 +6,14 @@ function radio() {
 	const request = (url) => fetch(url).then((res) => res.json());
 	const nowplaying = "https://media.money4you.financial:8032/api/nowplaying/1";
 	const src = "https://media.money4you.financial:8033/radio.mp3";
+	const audio = new Audio();
 
-	// varables
+	// variables
 	// --------
 	const playerImage = document.querySelector("#playerImage");
 	const playerTitle = document.querySelector("#playerTitle");
 	const playerBtnPlay = document.querySelector("#playerBtnPlay");
+	const playerTrack = document.querySelector("#playerTrack");
 
 	// templates
 	// ---------
@@ -30,17 +32,16 @@ function radio() {
 		};
 	};
 
-	// audio source
-	const audio = new Audio();
-	function songStart(songUrl) {
-		audio.src = songUrl;
+	// audio
+	function song(src) {
+		audio.src = src;
 		audio.play();
 	}
 
 	// main
 	// ----
 	const Player = {
-		main: this.main,
+		data: this.data,
 		art: this.art,
 		title: this.title,
 		songEndTimestamp: this.songEndTimestamp,
@@ -54,11 +55,13 @@ function radio() {
 		_update: async function () {
 			await request(nowplaying)
 				.then((res) => {
-					this.art = res.now_playing.song.art;
-					this.title = res.now_playing.song.text;
-					this.songEndTimestamp = res.now_playing.duration + res.now_playing.played_at;
-					this.playedAt = res.now_playing.played_at;
-					this.main = res.now_playing;
+					this.data = res.now_playing;
+				})
+				.then(() => {
+					this.art = this.data.song.art;
+					this.title = this.data.song.text;
+					this.songEndTimestamp = this.data.duration + this.data.played_at;
+					this.playedAt = this.data.played_at;
 				})
 				.then(() => this._render());
 		},
@@ -73,7 +76,7 @@ function radio() {
 				if (!audio.paused) {
 					audio.pause();
 				} else {
-					songStart(src);
+					song(src);
 				}
 			});
 
@@ -87,7 +90,13 @@ function radio() {
 					await this._update();
 					console.log("upgrade update from debounce function");
 				}
-				console.log(this.songEndTimestamp - Math.floor(Date.now() / 1000));
+				console.log(this.data);
+				const width =
+					((this.data.duration - (this.songEndTimestamp - Math.floor(Date.now() / 1000))) / this.data.duration) * 100;
+				console.log(width);
+				playerTrack.style.width = `${width}%`;
+
+				// console.log(this.songEndTimestamp - Math.floor(Date.now() / 1000));
 			}, 1000)();
 		},
 	};
