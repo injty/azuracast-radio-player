@@ -4,8 +4,6 @@ function radio() {
 	// requests
 	// --------
 	const request = (url) => fetch(url).then((res) => res.json());
-	const station = "https://media.money4you.financial:8032/api/station/1";
-	const time = "https://media.money4you.financial:8032/api/time";
 	const nowplaying = "https://media.money4you.financial:8032/api/nowplaying/1";
 	const src = "https://media.money4you.financial:8033/radio.mp3";
 
@@ -13,27 +11,17 @@ function radio() {
 	// --------
 	const playerImage = document.querySelector("#playerImage");
 	const playerTitle = document.querySelector("#playerTitle");
-	const playerArtist = document.querySelector("#playerArtist");
-	const playerAudio = document.querySelector("#playerAudio");
 	const playerBtnPlay = document.querySelector("#playerBtnPlay");
 
 	// templates
 	// ---------
-	const playerAudioTemp = `
-	<source src="%src%"></source>
-`;
-	const playerImageTemp = `
-	<img class="pl-image__source" src="%src%" alt="Album image">
-`;
-	const playerTextTemp = `
-	<h3 class="pl-text">%text%</h3>
-`;
+	const playerImageTemp = `<img class="pl-image__source" src="%src%" alt="Album image">`;
+	const playerTextTemp = `<h3 class="pl-text">%text%</h3>`;
 
 	// debounce
 	// --------
 	const debounce = (fn, ms) => {
 		let timer;
-
 		return function () {
 			clearInterval(timer);
 			timer = setInterval(() => {
@@ -42,23 +30,25 @@ function radio() {
 		};
 	};
 
+	// audio source
+	const audio = new Audio();
+	function songStart(songUrl) {
+		audio.src = songUrl;
+		audio.play();
+	}
+
 	// main
 	// ----
 	const Player = {
 		main: this.main,
-		src: this.src,
 		art: this.art,
 		title: this.title,
-
-		soundTime: this.soundTime,
+		songEndTimestamp: this.songEndTimestamp,
 
 		init: function () {
 			this._update()
-				.then(() => {
-					playerAudio.innerHTML = playerAudioTemp.replace("%src%", src);
-				})
 				.then(() => this._play())
-				.then(() => console.log("init: play and update first time"));
+				.then(() => console.log("init: _update() and _play() first time"));
 		},
 
 		_update: async function () {
@@ -66,7 +56,9 @@ function radio() {
 				.then((res) => {
 					this.art = res.now_playing.song.art;
 					this.title = res.now_playing.song.text;
-					this.soundTime = res.now_playing.duration + res.now_playing.played_at;
+					this.songEndTimestamp = res.now_playing.duration + res.now_playing.played_at;
+					this.playedAt = res.now_playing.played_at;
+					this.main = res.now_playing;
 				})
 				.then(() => this._render());
 		},
@@ -77,21 +69,26 @@ function radio() {
 		},
 
 		_play: function () {
-			playerBtnPlay.addEventListener("click", () => {
-				playerAudio.play();
+			playerBtnPlay.addEventListener("click", async () => {
+				if (!audio.paused) {
+					audio.pause();
+				} else {
+					songStart(src);
+				}
 			});
+
 			this._debounce();
 			console.log("update debounce from play function");
 		},
 
 		_debounce: function () {
 			debounce(async () => {
-				if (Math.floor(Date.now() / 1000) >= this.soundTime) {
+				if (Math.floor(Date.now() / 1000) >= this.songEndTimestamp) {
 					await this._update();
 					console.log("upgrade update from debounce function");
 				}
-				console.log(this.soundTime - Math.floor(Date.now() / 1000));
-			}, 3000)();
+				console.log(this.songEndTimestamp - Math.floor(Date.now() / 1000));
+			}, 1000)();
 		},
 	};
 
