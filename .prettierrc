@@ -10,5 +10,5 @@
 	"singleAttributePerLine": true,
 	"tabWidth": 2,
 	"endOfLine": "lf",
-	"printWidth": 120
+	"printWidth": 140
 }

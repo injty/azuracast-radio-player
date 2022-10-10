@@ -14,6 +14,8 @@ function radio() {
 	const playerTitle = document.querySelector("#playerTitle");
 	const playerBtnPlay = document.querySelector("#playerBtnPlay");
 	const playerTrack = document.querySelector("#playerTrack");
+	const playerMinutes = document.querySelector("#playerMinutes");
+	const playerSeconds = document.querySelector("#playerSeconds");
 
 	// templates
 	// ---------
@@ -67,6 +69,11 @@ function radio() {
 		},
 
 		_render: function () {
+			const min = Math.floor(this.data.duration / 60);
+			const sec = Math.floor(this.data.duration % 60);
+			min <= 9 ? (playerMinutes.innerHTML = `0${min}`) : (playerMinutes.innerHTML = min);
+			sec <= 9 ? (playerSeconds.innerHTML = `0${sec}`) : (playerSeconds.innerHTML = sec);
+
 			playerImage.innerHTML = playerImageTemp.replace("%src%", this.art);
 			playerTitle.innerHTML = playerTextTemp.replace("%text%", this.title);
 		},
@@ -90,13 +97,8 @@ function radio() {
 					await this._update();
 					console.log("upgrade update from debounce function");
 				}
-				console.log(this.data);
-				const width =
-					((this.data.duration - (this.songEndTimestamp - Math.floor(Date.now() / 1000))) / this.data.duration) * 100;
-				console.log(width);
+				const width = ((this.data.duration - (this.songEndTimestamp - Math.floor(Date.now() / 1000))) / this.data.duration) * 100;
 				playerTrack.style.width = `${width}%`;
-
-				// console.log(this.songEndTimestamp - Math.floor(Date.now() / 1000));
 			}, 1000)();
 		},
 	};
