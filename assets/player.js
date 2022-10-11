@@ -17,10 +17,21 @@ function radio() {
 	const playerMinutes = document.querySelector("#playerMinutes");
 	const playerSeconds = document.querySelector("#playerSeconds");
 
+	const playerImageWrapper = document.querySelector(".pl-wrapper-image");
+	const playerInfoWrapper = document.querySelector(".pl-wrapper-info");
+	const playerCloseBtn = document.querySelector("#playerCloseBtn");
+
+	playerCloseBtn.addEventListener("click", () => {
+		playerImageWrapper.classList.toggle("pl-wrapper-image-active");
+		playerInfoWrapper.classList.toggle("pl-wrapper-info-active");
+	});
+
 	// templates
 	// ---------
 	const playerImageTemp = `<img class="pl-image__source" src="%src%" alt="Album image">`;
-	const playerTextTemp = `<h3 class="pl-text">%text%</h3>`;
+	const playerTextTemp = `
+  <p>Now playing:</p> 
+	<p class="pl-text">%text%</p>`;
 
 	// debounce
 	// --------
@@ -71,11 +82,12 @@ function radio() {
 		_render: function () {
 			const min = Math.floor(this.data.duration / 60);
 			const sec = Math.floor(this.data.duration % 60);
+
 			min <= 9 ? (playerMinutes.innerHTML = `0${min}`) : (playerMinutes.innerHTML = min);
 			sec <= 9 ? (playerSeconds.innerHTML = `0${sec}`) : (playerSeconds.innerHTML = sec);
 
 			playerImage.innerHTML = playerImageTemp.replace("%src%", this.art);
-			playerTitle.innerHTML = playerTextTemp.replace("%text%", this.title);
+			playerTitle.innerHTML = playerTextTemp.replace("%text%", this.title, this.data.song.title);
 		},
 
 		_play: function () {
@@ -97,6 +109,7 @@ function radio() {
 					await this._update();
 					console.log("upgrade update from debounce function");
 				}
+				console.log(this.data);
 				const width = ((this.data.duration - (this.songEndTimestamp - Math.floor(Date.now() / 1000))) / this.data.duration) * 100;
 				playerTrack.style.width = `${width}%`;
 			}, 1000)();

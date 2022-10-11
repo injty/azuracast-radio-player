@@ -16,26 +16,27 @@
 
 	<body>
 		<section class="full-screen">
-			<div class="pl-wrapper">
-				<header class="pl-header"></header>
-				<section
-					class="pl-body"
-					id="playerBody">
-					<audio
-						id="playerAudio"
-						preload="auto"></audio>
-					<div class="pl-start">
-						<div
-							class="pl-image"
-							id="playerImage"></div>
-						<div class="pl-btn__play">
-							<img
-								id="playerBtnPlay"
-								src="assets/play.svg"
-								alt="play" />
-						</div>
+			<header class="pl-header"></header>
+			<section
+				class="pl-body"
+				id="playerBody">
+				<audio
+					id="playerAudio"
+					preload="auto"></audio>
+
+				<div class="pl-wrapper pl-wrapper-image">
+					<div
+						class="pl-image"
+						id="playerImage"></div>
+					<div class="pl-btn__play">
+						<img
+							id="playerBtnPlay"
+							src="assets/play.svg"
+							alt="play" />
 					</div>
-					<div class="pl-decore"></div>
+				</div>
+
+				<div class="pl-wrapper pl-wrapper-info">
 					<div class="pl-info">
 						<div
 							class="pl-title"
@@ -46,6 +47,12 @@
 						<div
 							class="pl-remaining"
 							id="playerRemaining"></div>
+					</div>
+				</div>
+
+				<div class="pl-wrapper pl-wrapper-line">
+					<span id="playerCloseBtn">Show More 🎧</span>
+					<div class="pl-line">
 						<div class="pl-duration">
 							<span
 								class="pl-minutes"
@@ -59,15 +66,13 @@
 								>00</span
 							>
 						</div>
-					</div>
-					<div class="pl-line">
 						<div
 							class="pl-line__track"
 							id="playerTrack"></div>
 					</div>
-				</section>
-				<section class="pl-footer"></section>
-			</div>
+				</div>
+			</section>
+			<section class="pl-footer"></section>
 		</section>
 		<script src="assets/player.js"></script>
 	</body>
