@@ -31,7 +31,9 @@
 	margin: 10px auto;
 	padding: 15px;
 	border-radius: 6px;
-	background-color: bisque;
+	background-color: #343434;
+	background: linear-gradient(-160deg, #cc5333 0%, #27002ee3 100%) no-repeat;
+	color: #f2f2f2;
 	box-shadow: 0 2px 8px 0 #34343434;
 
 	display: flex;
