@@ -4,6 +4,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: 'Nunito Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .full-screen {
@@ -20,16 +21,16 @@
 	bottom: 10px;
 	left: 10px;
 }
+
 .pl-wrapper {
 	position: absolute;
 	width: auto;
-	max-width: 320px;
+	width: 320px;
 	height: auto;
 	max-height: 300px;
 	margin: 10px auto;
 	padding: 15px;
-	/* border: 1px solid blanchedalmond; */
-	border-radius: 1rem;
+	border-radius: 6px;
 	background-color: bisque;
 	box-shadow: 0 2px 8px 0 #34343434;
 
@@ -38,19 +39,21 @@
 	align-items: center;
 	bottom: 0;
 	opacity: 0;
-	transition: bottom 350ms ease-in-out, opacity 200ms ease-in-out;
+	transition: bottom 250ms ease-in-out, opacity 200ms ease-in-out;
 }
 
 .pl-wrapper-image-active {
-	bottom: 190px;
+	bottom: 170px;
 	opacity: 1;
-	transition: bottom 350ms ease-in-out, opacity 0ms ease-in-out;
+	transition: bottom 250ms ease-in-out, opacity 400ms ease-in-out;
 }
+
 .pl-wrapper-info-active {
-	bottom: 100px;
+	bottom: 105px;
 	opacity: 1;
-	transition: bottom 250ms ease-in-out, opacity 200ms ease-in-out;
+	transition: bottom 200ms ease-in-out, opacity 400ms ease-in-out;
 }
+
 .pl-wrapper-line {
 	opacity: 1;
 }
@@ -59,6 +62,18 @@
 /* ------ */
 .pl-start {
 	position: relative;
+}
+
+.pl-manage {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+
+	font-size: 14px;
+	font-weight: 400;
+	user-select: none;
+	width: 100%;
 }
 
 .pl-image {
@@ -100,12 +115,17 @@
 }
 
 .pl-btn__play {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	display: flex;
-	width: 60px;
+	display: inline-flex;
+	width: 20px;
+	cursor: pointer;
+}
+
+.pl-btn__play svg {
+	font-size: 24px;
+	color: #dd9933;
+}
+
+.pl-btn__close {
 	cursor: pointer;
 }
 
@@ -114,18 +134,21 @@
 	flex-direction: column;
 	text-align: center;
 	align-items: center;
-	font-size: 12px;
-	font-family: Tahoma, sans-serif, monospace;
-	font-weight: 900;
+	font-size: 14px;
+	font-weight: 400;
 	line-height: 22px;
 }
 
 .pl-text {
 	width: 100%;
-	max-width: 220px;
+	max-width: 300px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.pl-duration {
+	display: inline-flex;
 }
 
 .pl-line {
@@ -142,15 +165,7 @@
 .pl-line__track {
 	width: 0%;
 	height: 100%;
-	background-color: darkcyan;
+	background-color: #dd9933;
 	border: none;
 	border-radius: 8px;
-}
-.pl-duration {
-	font-family: Tahoma, sans-serif, monospace;
-	font-size: 10px;
-	font-weight: 900;
-	position: absolute;
-	top: -20px;
-	right: 10px;
 }

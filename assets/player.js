@@ -12,7 +12,7 @@ function radio() {
 	// --------
 	const playerImage = document.querySelector("#playerImage");
 	const playerTitle = document.querySelector("#playerTitle");
-	const playerBtnPlay = document.querySelector("#playerBtnPlay");
+	const playerPlayBtn = document.querySelector("#playerPlayBtn");
 	const playerTrack = document.querySelector("#playerTrack");
 	const playerMinutes = document.querySelector("#playerMinutes");
 	const playerSeconds = document.querySelector("#playerSeconds");
@@ -29,9 +29,7 @@ function radio() {
 	// templates
 	// ---------
 	const playerImageTemp = `<img class="pl-image__source" src="%src%" alt="Album image">`;
-	const playerTextTemp = `
-  <p>Now playing:</p> 
-	<p class="pl-text">%text%</p>`;
+	const playerTextTemp = `<p class="pl-text">%text%</p>`;
 
 	// debounce
 	// --------
@@ -91,11 +89,13 @@ function radio() {
 		},
 
 		_play: function () {
-			playerBtnPlay.addEventListener("click", async () => {
+			playerPlayBtn.addEventListener("click", async () => {
 				if (!audio.paused) {
 					audio.pause();
+					playerPlayBtn.innerHTML = `<i class="fas fa-play-circle"></i>`;
 				} else {
 					song(src);
+					playerPlayBtn.innerHTML = `<i class="fas fa-pause-circle"></i>`;
 				}
 			});
 

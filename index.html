@@ -1,79 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			http-equiv="X-UA-Compatible"
-			content="IE=edge" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<link
-			rel="stylesheet"
-			href="assets/main.css" />
-	</head>
 
-	<body>
-		<section class="full-screen">
-			<header class="pl-header"></header>
-			<section
-				class="pl-body"
-				id="playerBody">
-				<audio
-					id="playerAudio"
-					preload="auto"></audio>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="assets/main.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.2/css/all.min.css"
+		integrity="sha512-NicFTMUg/LwBeG8C7VG+gC4YiiRtQACl98QdkmfsLy37RzXdkaUAuPyVMND0olPP4Jn8M/ctesGSB2pgUBDRIw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
+</head>
 
-				<div class="pl-wrapper pl-wrapper-image">
-					<div
-						class="pl-image"
-						id="playerImage"></div>
-					<div class="pl-btn__play">
-						<img
-							id="playerBtnPlay"
-							src="assets/play.svg"
-							alt="play" />
+<body>
+	<section class="full-screen">
+		<header class="pl-header"></header>
+		<section class="pl-body" id="playerBody">
+			<audio id="playerAudio" preload="auto"></audio>
+
+			<div class="pl-wrapper pl-wrapper-image">
+				<div class="pl-image" id="playerImage"></div>
+			</div>
+
+			<div class="pl-wrapper pl-wrapper-info">
+				<div class="pl-info">
+					<div class="pl-title" id="playerTitle"></div>
+					<div class="pl-artist" id="playerArtist"></div>
+					<div class="pl-remaining" id="playerRemaining"></div>
+				</div>
+			</div>
+
+			<div class="pl-wrapper pl-wrapper-line">
+				<div class="pl-manage">
+					<div class="pl-btn__play" id="playerPlayBtn">
+						<i class="fas fa-play-circle"></i>
+					</div>
+					<span class="pl-btn__close" id="playerCloseBtn">What a song?</span>
+					<div class="pl-duration">
+						<span class="pl-minutes" id="playerMinutes">00</span>
+						<span>:</span>
+						<span class="pl-seconds" id="playerSeconds">00</span>
 					</div>
 				</div>
-
-				<div class="pl-wrapper pl-wrapper-info">
-					<div class="pl-info">
-						<div
-							class="pl-title"
-							id="playerTitle"></div>
-						<div
-							class="pl-artist"
-							id="playerArtist"></div>
-						<div
-							class="pl-remaining"
-							id="playerRemaining"></div>
-					</div>
+				<div class="pl-line">
+					<div class="pl-line__track" id="playerTrack"></div>
 				</div>
-
-				<div class="pl-wrapper pl-wrapper-line">
-					<span id="playerCloseBtn">Show More 🎧</span>
-					<div class="pl-line">
-						<div class="pl-duration">
-							<span
-								class="pl-minutes"
-								id="playerMinutes"
-								>00</span
-							>
-							<span>:</span>
-							<span
-								class="pl-seconds"
-								id="playerSeconds"
-								>00</span
-							>
-						</div>
-						<div
-							class="pl-line__track"
-							id="playerTrack"></div>
-					</div>
-				</div>
-			</section>
-			<section class="pl-footer"></section>
+			</div>
 		</section>
-		<script src="assets/player.js"></script>
-	</body>
+		<section class="pl-footer"></section>
+	</section>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.2/js/all.js"
+		integrity="sha512-6fdebBDUlSho6wquwrQawYnGYuT7iSRv0HMkmI7DsB1uChpiVDWEGRpx+LLjj2iYW2E3gNIbPscjWUUczNMOpw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="assets/player.js"></script>
+</body>
+
 </html>
