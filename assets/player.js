@@ -4,8 +4,8 @@ function radio() {
   // requests
   // --------
   const request = (url) => fetch(url).then((res) => res.json());
-  const nowplaying = "https://media.money4you.financial:8032/api/nowplaying/1";
-  const src = "https://media.money4you.financial:8033/radio.mp3";
+  const nowplaying = "https://radio.money4you.financial/api/nowplaying/1";
+  const src = "https://radio.money4you.financial/listen/money4you/radio.mp3";
   const audio = new Audio();
 
   // variables
